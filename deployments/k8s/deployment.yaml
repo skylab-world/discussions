@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discussions
+  labels:
+    app: discussions
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: discussions
+  template:
+    metadata:
+      labels:
+        app: discussions
+    spec:
+      containers:
+      - name: discussions
+        image: skylabworld/discussions
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secrets
